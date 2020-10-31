@@ -10,6 +10,8 @@ app.use(express.static('build'));
 
 /** ---------- EXPRESS ROUTES ---------- **/
 
+const feedbackRouter = ('./routes/feedbackRouter.js');
+app.use('/feedback', feedbackRouter);
 
 /** ---------- START SERVER ---------- **/
 app.listen(PORT, () => {
