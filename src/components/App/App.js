@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 //import components
 import Home from '../Home/Home';
 import Scale from '../Scale/Scale';
+import Comments from '../Comments/Comments'
 
 class App extends Component {
   render() {
@@ -45,13 +46,19 @@ class App extends Component {
                               direction={{
                                 backward: '/understanding',
                                 forward: '/comments'
-                        }}
+                              }}
               />} />
 
-            {/* <Route exact path="/comments"
-              render={() => <Comments/>} />
+            <Route exact path="/comments"
+              render={() => <Comments
+                              default={this.props.comments}
+                              direction={{
+                                backward: '/support',
+                                forward: '/review'
+                              }}
+                />} />
               
-            <Route exact path="/review"
+            {/* <Route exact path="/review"
               render={() => <Review/>} /> */}
         </Router>
       </div>

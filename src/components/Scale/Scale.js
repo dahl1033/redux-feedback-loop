@@ -13,7 +13,7 @@ class Scale extends Component {
             value: value,
         })
     }
-    //update reduxState with current state at the 
+    // update reduxState with current state when user clicks back or next to keep track of previous responses
     setStore = (action) => {
         this.props.dispatch({ 
             type: action, 
@@ -23,7 +23,7 @@ class Scale extends Component {
 
     render() {
         return (
-            <div className="slide">
+            <div className="slideBlock">
                 <p>{this.props.question}</p>
                 <input type="number"
                     onChange={(value) => this.value = value}
