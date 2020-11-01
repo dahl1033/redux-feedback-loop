@@ -2,43 +2,46 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-class Scale extends Component {
-    //set local state to reduxState value recieved from App.js
+class Understanding extends Component {
+
+    //set local state 
     state = {
-        value: this.props.default,
+        understanding: 3
     };
-    // sets the current value selected while still on number input
-    setValue = (value) => {
+
+    // grabs the value and set the state to the value
+    handleChange = (event) => {
+        console.log(this.state);
         this.setState({
-            value: value,
+            understanding: event.target.value
         })
     }
+
     // update reduxState with current state when user clicks back or next to keep track of previous responses
-    setStore = (action) => {
+    setStore = () => {
+        console.log(this.state );
         this.props.dispatch({ 
-            type: action, 
-            payload: this.state.value 
+            type: this.props.action, 
+            payload: this.state.understanding 
         });
     }
 
     render() {
         return (
-            <div className="slideBlock">
+            <div className="scaleBlock">
                 <p>{this.props.question}</p>
-                <input type="number"
-                    onChange={(value) => this.value = value}
-                    onChangeCommitted={() => this.setValue(this.value)}
-                />
+                
+                <input type="number" min="1" max="5" onChange={this.handleChange}/>
+
                 {/* update redux and route back,  while updating the redux store of current feeback values using history */}
                 <button className="back" 
-                    onClick={() => {this.setStore(
-                        this.props.action); 
-                        this.props.history.push(this.props.direction.backward);}}>
+                    onClick={() => {this.setStore(); 
+                        
+                        this.props.history.push(this.props.direction.backward);}}> {/* pass previous userresponse backwards */}
                         Back</button>
                 {/* update redux and route to next page, while updating the redux store of current feeback values using history    */}
                 <button className="next" 
-                    onClick={() => {this.setStore(
-                        this.props.action); 
+                    onClick={() => {this.setStore(); 
                         this.props.history.push(this.props.direction.forward);}}>
                             Next</button>
             </div>
@@ -48,4 +51,4 @@ class Scale extends Component {
 
 // using withRouter gets access to the history object’s properties and closest routes available
 // in this case helps traverse back and forth between Feeling, Undeerstanding, and Support while retaining data
-export default connect()(withRouter(Scale));
+export default connect()(withRouter(Understanding));

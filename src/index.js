@@ -8,27 +8,20 @@ import { Provider } from 'react-redux';
 import { applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 
-const scales = (state = 3, action) => {
-    switch (action.type){
-        case (action.type === 'UNDERSTANDING_FEEDBACK'):
-            return action.payload;
-        case (action.type === 'FEELING_FEEDBACK'):
-            return action.payload;
-        case (action.type === 'SUPPORT_FEEDBACK'):
-            return action.payload;
-        case (action.type === 'COMMENTS_FEEDBACK'):
-            return action.payload;
-        case (action.type === 'RESET'):
-            return 3;
+const feedBackReducer = (state=[], action) => {
+    switch(action.type){
+        case "ADD_FEEDBACK":
+            return [...state,action.payload];
+        case "CLEAR_FEEDBACK":
+            return [];
         default:
             return state;
     }
-    
-
 }
+
 const reduxStore = createStore(
     combineReducers({
-        scales
+        feedBackReducer
     }),
     applyMiddleware(logger)
   );

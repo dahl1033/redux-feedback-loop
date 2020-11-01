@@ -3,10 +3,13 @@ import './App.css';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-//import components
+//import components for feeback form
 import Home from '../Home/Home';
-import Scale from '../Scale/Scale';
-import Comments from '../Comments/Comments'
+import Feeling from '../Scale/Feeling';
+import Understanding from '../Scale/Understanding';
+import Support from '../Scale/Support';
+import Comments from '../Comments/Comments';
+import Review from '../Review/Review';
 
 class App extends Component {
   render() {
@@ -18,48 +21,51 @@ class App extends Component {
         </header>
         <br/>
         <Router>
+          {/* Route for home page */}
           <Route exact path="/" component={Home} />
+          {/* Route for felling form page */}
             <Route exact path="/feeling" 
-            render={() => <Scale action='SET_FEELING'
+            render={() => <Feeling action='ADD_FEEDBACK'
                               question={'How are you feeling today?'}
-                              default={this.props.feeling}
                               direction={{
                                 backward: '/',
                                 forward: '/understanding'
                               }}
             />}/>
-
+            {/* Route for understanding form page */}
             <Route exact path="/understanding"
-              render={() => <Scale action='SET_UNDERSTANDING'
+              render={() => <Understanding action='ADD_FEEDBACK'
                               question={'How well did you understand the material today?'}
-                              default={this.props.understanding}
                               direction={{
                                 backward: '/feeling',
                                 forward: '/support'
                               }}
-              />} />
-
+            />} />
+            {/* Route for support form page */}
             <Route exact path="/support"
-              render={() => <Scale action='SET_SUPPORT'
+              render={() => <Support action='ADD_FEEDBACK'
                               question={'How well did you feel supported today?'}
-                              default={this.props.support}
                               direction={{
                                 backward: '/understanding',
                                 forward: '/comments'
                               }}
-              />} />
-
+            />} />
+            {/* Route for comments form page */}
             <Route exact path="/comments"
-              render={() => <Comments
-                              default={this.props.comments}
+              render={() => <Comments action='ADD_FEEDBACK'
                               direction={{
                                 backward: '/support',
                                 forward: '/review'
                               }}
-                />} />
-              
-            {/* <Route exact path="/review"
-              render={() => <Review/>} /> */}
+            />} />
+            {/* Route for review page */}
+            <Route exact path="/review"
+              render={() => <Review
+                              direction={{
+                                backward: '/comments',
+                                forward: '/'
+                              }}
+            />} />
         </Router>
       </div>
     );
